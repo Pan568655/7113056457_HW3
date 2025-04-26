@@ -94,6 +94,14 @@ $$
 Q_{t+1}(A_t) = Q_t(A_t) + \frac{1}{N_t(A_t)} \left( R_t - Q_t(A_t) \right)
 $$
 
+### (2) ChatGPT Prompt
+#### 概念介紹
+- 以機率 **ε** 隨機探索，其餘時間選擇目前回報最高的臂。
+- 簡單且實作容易，但 ε 固定導致探索無法隨時間自動調整。
+#### 優缺點
+- ✅ 簡單直觀，適合初學。
+- ❌ 探索效率低，ε 難以最佳化。
+
 ### (3) 程式碼與圖表
 - ![Epsilon-Greedy Plot](result/greedy.png)
 
@@ -111,6 +119,13 @@ $$
 A_t = \arg\max\limits_{a} \left( Q_t(a) + \sqrt{\frac{2 \ln t}{N_t(a)}} \right)
 $$
 
+### (2) ChatGPT Prompt
+#### 概念介紹
+- 根據信賴區間調整探索，優先選擇不確定性高的臂。
+- 適應性強，無需手動設定參數。
+#### 優缺點
+- ✅ 理論後悔界佳，自動控制探索。
+- ❌ 初期探索代價高，對變動環境敏感。
 
 ### (3) 程式碼與圖表
 - ![UCB1 Plot](result/UCB1.png)
@@ -128,6 +143,14 @@ $$
 $$
 P_t(a) = \frac{\exp(Q_t(a)/\tau)}{\sum_{j=1}^{K} \exp(Q_t(j)/\tau)}
 $$
+
+### (2) ChatGPT Prompt
+#### 概念介紹
+- 根據臂的回報估計，以機率選擇臂，控制溫度參數 **τ**。
+- 高 τ → 隨機性強，低 τ → 趨於貪婪。
+#### 優缺點
+- ✅ 平滑調整探索力度。
+- ❌ 需設 τ，對參數敏感。
 
 ### (3) 程式碼與圖表
 - ![Softmax Plot](result/softmax.png)
@@ -157,9 +180,16 @@ $$
 \beta_{A_t} \leftarrow \beta_{A_t} + 1 - R_t
 $$
 
+### (2) ChatGPT Prompt
+#### 概念介紹
+- 使用貝葉斯推斷，根據每個臂的後驗分佈進行抽樣選擇。
+- 探索與利用自然平衡，快速收斂。
+#### 優缺點
+- ✅ 收斂快，理論與實務皆佳。
+- ❌ 需設定先驗，抽樣較複雜。
 
 ### (3) 程式碼與圖表
-- ![Thompson Sampling Plot](result/thompson.png)
+- ![Thompson Sampling Plot](result/Thompson.png)
 
 ### (4) 結果分析
 - 基於貝葉斯推斷，自然平衡探索。
@@ -177,13 +207,6 @@ $$
 | Thompson       | 後驗分佈抽樣   | 最快        | 先驗參數     |
 
 ---
-
-## 📂 資料結構
-
- .
-
-(3) 程式碼與圖表
-見第四張圖 “Thompson Sampling – Average Cumulative Reward”。
 
 (4) 結果解釋
 時間面：在本實驗設定下，斜率最高，代表收斂最快；因後驗收斂速度受真機率與觀測數量共同決定。
